@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的公司</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --accent: #e94560;
+        --dark: #0f0f1a;
+        --text: #1a1a2e;
+        --muted: #666;
+        --bg: #f8f8fc;
+        --white: #ffffff;
+        --nav-height: 64px;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        font-family: 'Noto Sans SC', sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      /* ── 导航栏 ── */
+      nav {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        height: var(--nav-height);
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        padding: 0 24px;
+        z-index: 100;
+      }
+      .nav-inner {
+        max-width: 1000px;
+        width: 100%;
+        margin: 0 auto;
+        height: var(--nav-height);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 18px;
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        color: var(--text);
+      }
+      .logo span { color: var(--accent); }
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        margin-left: 32px;
+        font-size: 14px;
+        font-weight: 400;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover { color: var(--accent); }
+
+      /* ── Hero ── */
+      .hero {
+        margin-top: var(--nav-height);
+        height: calc(100vh - var(--nav-height));
+        min-height: 500px;
+        background-image: url('hero.jpg');
+        background-size: 120%;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 24px;
+        position: relative;
+        animation: heroPan 20s ease-in-out infinite;
+      }
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(10,10,26,0.55), rgba(10,10,26,0.75));
+      }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        animation: fadeUp 0.9s ease both;
+      }
+      .hero-tag {
+        display: inline-block;
+        background: rgba(233,69,96,0.2);
+        border: 1px solid rgba(233,69,96,0.4);
+        color: #ff8fa3;
+        font-size: 12px;
+        letter-spacing: 2px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        margin-bottom: 24px;
+        text-transform: uppercase;
+      }
+      .hero h1 {
+        color: white;
+        font-size: clamp(36px, 6vw, 72px);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        margin-bottom: 20px;
+      }
+      .hero p {
+        color: rgba(255,255,255,0.65);
+        font-size: clamp(15px, 2vw, 18px);
+        font-weight: 300;
+        margin-bottom: 40px;
+        max-width: 480px;
+      }
+      .btn {
+        background-color: var(--accent);
+        color: white;
+        padding: 14px 36px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        font-family: 'Noto Sans SC', sans-serif;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+        font-weight: 700;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(233,69,96,0.4);
+        background: #d63350;
+      }
+
+      /* ── 服务区域 ── */
+      .services {
+        padding: 100px 48px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 64px;
+      }
+      .section-tag {
+        display: inline-block;
+        color: var(--accent);
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .section-header h2 {
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 900;
+        color: var(--text);
+        letter-spacing: -0.5px;
+      }
+      .section-header p {
+        color: var(--muted);
+        margin-top: 12px;
+        font-size: 15px;
+        font-weight: 300;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .card {
+        background: var(--white);
+        border-radius: 16px;
+        padding: 40px 32px;
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+        transition: transform 0.3s, box-shadow 0.3s;
+        animation: fadeUp 0.6s ease both;
+      }
+      .card:nth-child(1) { animation-delay: 0.1s; }
+      .card:nth-child(2) { animation-delay: 0.2s; }
+      .card:nth-child(3) { animation-delay: 0.3s; }
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+      }
+      .card .icon {
+        font-size: 36px;
+        margin-bottom: 20px;
+        display: block;
+      }
+      .card h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: var(--text);
+      }
+      .card p {
+        color: var(--muted);
+        line-height: 1.8;
+        font-size: 14px;
+        font-weight: 300;
+      }
+
+      /* ── 页脚 ── */
+      footer {
+        background: var(--dark);
+        color: rgba(255,255,255,0.4);
+        text-align: center;
+        padding: 48px 24px;
+      }
+      footer .footer-links { margin-bottom: 16px; }
+      footer .footer-links a {
+        color: rgba(255,255,255,0.4);
+        text-decoration: none;
+        font-size: 13px;
+        margin: 0 16px;
+        transition: color 0.2s;
+      }
+      footer .footer-links a:hover { color: white; }
+      footer p { font-size: 13px; }
+
+      /* ── 动画 ── */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(24px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ── 手机端 ── */
+      @media (max-width: 768px) {
+        nav {
+          padding: 0 20px;
+        }
+        .nav-links a {
+          margin-left: 16px;
+          font-size: 13px;
+        }
+        .hero {
+          height: 380px;
+          min-height: unset;
+          background-size: cover;
+          animation: none;
+        }
+        .services { padding: 72px 20px; }
+        .cards {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .card { padding: 32px 24px; }
+      }
+      @keyframes heroPan {
+      0%   { background-position: 0% center; }
+      50%  { background-position: 100% center; }
+      100% { background-position: 0% center; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav>
+      <div class="nav-inner">
+        <div class="logo">
+          <a href="index.html">
+            <img src="logo.svg" alt="logo" height="36px">
+          </a>         
+        </div>
+        <div class="nav-links">
+          <a href="index.html">ホーム</a>
+          <a href="about.html">关于我们</a>
+          <a href="contact.html">联系我们</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-tag">我们正在成长</div>
+        <h1>我们创造<br>属于未来的产品</h1>
+        <p>专注于用技术解决真实问题，让复杂的事情变得简单</p>
+        <button class="btn">了解更多</button>
+      </div>
+    </div>
+
+    <div class="services">
+      <div class="section-header">
+        <div class="section-tag">我们能做什么</div>
+        <h2>我们的服务</h2>
+        <p>从想法到落地，我们全程陪伴</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <span class="icon">🚀</span>
+          <h3>产品开发</h3>
+          <p>从想法到落地，帮助你快速构建产品原型，验证核心假设</p>
+        </div>
+        <div class="card">
+          <span class="icon">💡</span>
+          <h3>战略咨询</h3>
+          <p>深度分析市场，为你制定清晰的发展路径，减少试错成本</p>
+        </div>
+        <div class="card">
+          <span class="icon">📈</span>
+          <h3>增长运营</h3>
+          <p>数据驱动，持续优化你的用户增长策略，实现可持续发展</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-links">
+        <a href="index.html">首页</a>
+        <a href="about.html">关于我们</a>
+        <a href="contact.html">联系我们</a>
+      </div>
+      <p>© 2026 我的公司 · 保留所有权利</p>
+    </footer>
+
+  </body>
+</html>

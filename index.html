@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式会社天典</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --accent: #e94560;
+        --dark: #0f0f1a;
+        --text: #1a1a2e;
+        --muted: #666;
+        --bg: #f8f8fc;
+        --white: #ffffff;
+        --nav-height: 64px;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        font-family: 'Noto Sans SC', sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      /* ── 导航栏 ── */
+      nav {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        height: var(--nav-height);
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        padding: 0 24px;
+        z-index: 100;
+      }
+      .nav-inner {
+        max-width: 1000px;
+        width: 100%;
+        margin: 0 auto;
+        height: var(--nav-height);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 18px;
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        color: var(--text);
+      }
+      .logo span { color: var(--accent); }
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        margin-left: 32px;
+        font-size: 14px;
+        font-weight: 400;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover { color: var(--accent); }
+
+      /* ── Hero ── */
+      .hero {
+        margin-top: var(--nav-height);
+        height: 560px;
+        min-height: 360px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 24px;
+        overflow: hidden;
+        background: #0c0c28;
+      }
+
+      /* Canvas background */
+      #hero-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+
+      /* Gradient overlay */
+      .hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: 
+          radial-gradient(ellipse 80% 60% at 50% 100%, rgba(233,69,96,0.18) 0%, transparent 70%),
+          linear-gradient(to bottom, rgba(6,6,20,0.1) 0%, rgba(6,6,20,0.35) 60%, rgba(6,6,20,0.65) 100%);
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        animation: fadeUp 0.9s ease both;
+      }
+      .hero-tag {
+        display: inline-block;
+        background: rgba(233,69,96,0.2);
+        border: 1px solid rgba(233,69,96,0.4);
+        color: #ff8fa3;
+        font-size: 12px;
+        letter-spacing: 2px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        margin-bottom: 24px;
+        text-transform: uppercase;
+      }
+      .hero h1 {
+        color: white;
+        font-size: clamp(36px, 6vw, 72px);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -1px;
+        margin-bottom: 20px;
+      }
+      .hero p {
+        color: rgba(255,255,255,0.65);
+        font-size: clamp(15px, 2vw, 18px);
+        font-weight: 300;
+        margin-bottom: 40px;
+        max-width: 560px;
+      }
+      .btn {
+        background-color: var(--accent);
+        color: white;
+        padding: 14px 36px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        font-family: 'Noto Sans SC', sans-serif;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+        font-weight: 700;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(233,69,96,0.4);
+        background: #d63350;
+      }
+
+      /* ── 服务区域 ── */
+      .services {
+        padding: 100px 48px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 64px;
+      }
+      .section-tag {
+        display: inline-block;
+        color: var(--accent);
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .section-header h2 {
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 900;
+        color: var(--text);
+        letter-spacing: -0.5px;
+      }
+      .section-header p {
+        color: var(--muted);
+        margin-top: 12px;
+        font-size: 15px;
+        font-weight: 300;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .card {
+        background: var(--white);
+        border-radius: 16px;
+        padding: 40px 32px;
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+        transition: transform 0.3s, box-shadow 0.3s;
+        animation: fadeUp 0.6s ease both;
+      }
+      .card:nth-child(1) { animation-delay: 0.1s; }
+      .card:nth-child(2) { animation-delay: 0.2s; }
+      .card:nth-child(3) { animation-delay: 0.3s; }
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+      }
+      .card .icon {
+        font-size: 36px;
+        margin-bottom: 20px;
+        display: block;
+      }
+      .card h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: var(--text);
+      }
+      .card p {
+        color: var(--muted);
+        line-height: 1.8;
+        font-size: 14px;
+        font-weight: 300;
+      }
+
+      /* ── 页脚 ── */
+      footer {
+        background: var(--white);
+        color: var(--muted);
+        padding: 16px;
+        border-top: 1px solid rgba(0,0,0,0.08);
+      }
+      .footer-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      footer .footer-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 13px;
+        margin: 0 16px;
+        transition: color 0.2s;
+      }
+      footer .footer-links a:hover { color: black; }
+      footer p { font-size: 13px; }
+
+      /* ── 动画 ── */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(24px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ── 手机端 ── */
+      @media (max-width: 768px) {
+        nav { padding: 0 20px; }
+        .nav-links a { margin-left: 16px; font-size: 13px; }
+        .hero { min-height: 380px; }
+        .services { padding: 72px 20px; }
+        .cards { grid-template-columns: 1fr; gap: 16px; }
+        .card { padding: 32px 24px; }
+        .footer-inner {
+          flex-direction: column;
+          gap: 8px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav>
+      <div class="nav-inner">
+        <div class="logo">
+          <a href="index.html">
+            <img src="logo.svg" alt="logo" height="36px">
+          </a>         
+        </div>
+        <div class="nav-links">
+          <a href="index.html">ホーム</a>
+          <a href="about.html">会社概要</a>
+          <a href="contact.html">お問い合わせ</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero-content">
+        <div class="hero-tag">私たちは成長しています</div>
+        <h1>生み出すのは<br>未来のプロダクト</h1>
+        <p>テクノロジーで現実の課題を解決し、複雑なことをシンプルにする</p>
+        <button class="btn">もっと見る</button>
+      </div>
+    </div>
+
+    <div class="services">
+      <div class="section-header">
+        <div class="section-tag">私たちにできること</div>
+        <h2>私たちのサービス</h2>
+        <p>アイデアから実現まで、全力でサポートします</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <span class="icon">🚀</span>
+          <h3>プロダクト開発</h3>
+          <p>アイデアから実装まで、プロダクトのプロトタイプを素早く構築し、コアな仮説を検証します</p>
+        </div>
+        <div class="card">
+          <span class="icon">💡</span>
+          <h3>戦略コンサルティング</h3>
+          <p>市場を深く分析し、明確な成長ロードマップを策定することで、試行錯誤のコストを削減します</p>
+        </div>
+        <div class="card">
+          <span class="icon">📈</span>
+          <h3>グロース・オペレーション</h3>
+          <p>データドリブンで、ユーザー獲得戦略を継続的に最適化し、持続可能な成長を実現します</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-inner">
+        <p>© 2026 株式会社天典</p>
+        <div class="footer-links">
+          <a href="index.html">ホーム</a>
+          <a href="about.html">会社概要</a>
+          <a href="contact.html">お問い合わせ</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+    (function() {
+      const canvas = document.getElementById('hero-canvas');
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', () => { resize(); initAll(); });
+
+      const COLORS = {
+        accent: '#e94560',
+        accentBlue: '#3a7bd5',
+        accentCyan: '#00d2ff',
+        nodePrimary: 'rgba(233,69,96,0.9)',
+        nodeSecondary: 'rgba(58,123,213,0.8)',
+        nodeAccent: 'rgba(0,210,255,0.75)',
+      };
+
+      /* ── Perspective grid ── */
+      function drawGrid(t) {
+        const W = canvas.width, H = canvas.height;
+        const cx = W / 2, hy = H * 0.62;
+        const speed = 0.00018;
+        const offset = (t * speed) % 1;
+
+        ctx.save();
+        ctx.lineWidth = 0.8;
+
+        const COLS = 18, ROWS = 22;
+        const gridW = W * 1.6;
+
+        for (let i = 0; i <= COLS; i++) {
+          const x = (cx - gridW / 2) + (i / COLS) * gridW;
+          const dx = x - cx;
+          const alpha = (1 - Math.abs(dx) / (gridW * 0.6)) * 0.5;
+          if (alpha <= 0) continue;
+          ctx.globalAlpha = alpha;
+          ctx.strokeStyle = 'rgba(80,110,255,0.55)';
+          ctx.beginPath();
+          ctx.moveTo(cx + dx * 0.05, hy);
+          ctx.lineTo(x, H + 20);
+          ctx.stroke();
+        }
+
+        for (let j = 0; j <= ROWS; j++) {
+          const rawT = ((j / ROWS) + offset) % 1;
+          const perspT = Math.pow(rawT, 1.8);
+          const y = hy + perspT * (H + 20 - hy);
+          const alpha = perspT * 0.7;
+          const xSpread = perspT * (gridW / 2);
+          ctx.globalAlpha = alpha;
+          ctx.strokeStyle = 'rgba(80,110,255,0.5)';
+          ctx.beginPath();
+          ctx.moveTo(cx - xSpread, y);
+          ctx.lineTo(cx + xSpread, y);
+          ctx.stroke();
+        }
+
+        ctx.globalAlpha = 1;
+        ctx.restore();
+      }
+
+      /* ── Floating code snippets ── */
+      const snippets = [
+        'const api = new API();', 'async function deploy() {',
+        '  return await build();', 'npm run start',
+        'git commit -m "feat"', 'docker-compose up',
+        'SELECT * FROM users', 'kubectl apply -f app.yaml',
+        'export default function()', 'interface IService {',
+        'type Promise<T>', '$ npm install',
+        'CI/CD pipeline ✓', 'test passed ✓',
+        'BUILD SUCCESS', 'v2.0.0 released',
+      ];
+
+      let codeParticles = [];
+      function spawnCode(randomY) {
+        const W = canvas.width, H = canvas.height;
+        codeParticles.push({
+          text: snippets[Math.floor(Math.random() * snippets.length)],
+          x: Math.random() * W,
+          y: randomY ? Math.random() * H : H + 30,
+          speed: 0.18 + Math.random() * 0.28,
+          opacity: 0,
+          maxOpacity: 0.22 + Math.random() * 0.25,
+          size: 11 + Math.floor(Math.random() * 5),
+          fadeIn: 0.003 + Math.random() * 0.004,
+          color: Math.random() < 0.5 ? COLORS.accentCyan : '#7cc5ff',
+        });
+      }
+
+      function initCode() {
+        codeParticles = [];
+        const count = Math.min(14, Math.floor(canvas.width / 90));
+        for (let i = 0; i < count; i++) spawnCode(true);
+      }
+
+      function tickCode() {
+        for (let i = codeParticles.length - 1; i >= 0; i--) {
+          const p = codeParticles[i];
+          p.y -= p.speed;
+          if (p.opacity < p.maxOpacity) p.opacity += p.fadeIn;
+          if (p.y < -30) { codeParticles.splice(i, 1); spawnCode(false); }
+        }
+      }
+
+      function drawCode() {
+        ctx.save();
+        for (const p of codeParticles) {
+          ctx.globalAlpha = p.opacity;
+          ctx.fillStyle = p.color;
+          ctx.font = `${p.size}px 'Courier New', monospace`;
+          ctx.fillText(p.text, p.x, p.y);
+        }
+        ctx.restore();
+      }
+
+      /* ── Network nodes ── */
+      let nodes = [], edges = [];
+
+      function initNodes() {
+        const W = canvas.width, H = canvas.height;
+        const count = Math.min(55, Math.floor((W * H) / 22000));
+        nodes = [];
+        for (let i = 0; i < count; i++) {
+          const type = Math.random();
+          nodes.push({
+            x: Math.random() * W, y: Math.random() * H,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            r: type < 0.15 ? 4.5 : type < 0.4 ? 3 : 2,
+            color: type < 0.15 ? COLORS.nodePrimary : type < 0.5 ? COLORS.nodeSecondary : COLORS.nodeAccent,
+            pulse: Math.random() * Math.PI * 2,
+            pulseSpeed: 0.02 + Math.random() * 0.03,
+          });
+        }
+        buildEdges();
+      }
+
+      function buildEdges() {
+        edges = [];
+        const maxDist = canvas.width * 0.18;
+        for (let i = 0; i < nodes.length; i++)
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+            if (Math.sqrt(dx*dx + dy*dy) < maxDist) edges.push({ a: i, b: j, maxDist });
+          }
+      }
+
+      /* ── Data packets ── */
+      let packets = [];
+      function spawnPacket() {
+        if (!edges.length) return;
+        const edge = edges[Math.floor(Math.random() * edges.length)];
+        packets.push({ edge, t: 0, speed: 0.004 + Math.random() * 0.006,
+          color: Math.random() < 0.5 ? COLORS.accent : COLORS.accentCyan });
+      }
+
+      function tickPackets() {
+        for (let i = packets.length - 1; i >= 0; i--) {
+          packets[i].t += packets[i].speed;
+          if (packets[i].t >= 1) packets.splice(i, 1);
+        }
+        if (packets.length < 12 && Math.random() < 0.08) spawnPacket();
+      }
+
+      function drawPackets() {
+        ctx.save();
+        for (const p of packets) {
+          const na = nodes[p.edge.a], nb = nodes[p.edge.b];
+          if (!na || !nb) continue;
+          const x = na.x + (nb.x - na.x) * p.t;
+          const y = na.y + (nb.y - na.y) * p.t;
+          ctx.globalAlpha = 0.9;
+          ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI*2);
+          ctx.fillStyle = p.color; ctx.fill();
+          ctx.globalAlpha = 0.3;
+          ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI*2);
+          ctx.fillStyle = p.color; ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      function tickNodes() {
+        const W = canvas.width, H = canvas.height;
+        for (const n of nodes) {
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > W) n.vx *= -1;
+          if (n.y < 0 || n.y > H) n.vy *= -1;
+          n.pulse += n.pulseSpeed;
+        }
+      }
+
+      function drawEdges() {
+        const maxDist = canvas.width * 0.18;
+        ctx.save();
+        for (const e of edges) {
+          const na = nodes[e.a], nb = nodes[e.b];
+          const dx = na.x - nb.x, dy = na.y - nb.y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d > maxDist) continue;
+          ctx.globalAlpha = (1 - d / maxDist) * 0.35;
+          ctx.strokeStyle = 'rgba(130,170,255,0.65)';
+          ctx.lineWidth = 0.8;
+          ctx.beginPath(); ctx.moveTo(na.x, na.y); ctx.lineTo(nb.x, nb.y);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function drawNodes() {
+        ctx.save();
+        for (const n of nodes) {
+          const pulse = Math.sin(n.pulse) * 0.4 + 0.6;
+          ctx.globalAlpha = 0.25 * pulse;
+          ctx.beginPath(); ctx.arc(n.x, n.y, n.r * 3.5, 0, Math.PI*2);
+          ctx.fillStyle = n.color; ctx.fill();
+          ctx.globalAlpha = 1.0 * pulse;
+          ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+          ctx.fillStyle = n.color; ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      /* ── Ambient glow orbs ── */
+      function drawOrbs(t) {
+        const W = canvas.width, H = canvas.height;
+        ctx.save();
+
+        const rx = W * 0.78 + Math.sin(t * 0.0003) * 60;
+        const ry = H * 0.22 + Math.cos(t * 0.0004) * 40;
+        const rg = ctx.createRadialGradient(rx, ry, 0, rx, ry, W * 0.28);
+        rg.addColorStop(0, 'rgba(233,69,96,0.32)'); rg.addColorStop(1, 'transparent');
+        ctx.fillStyle = rg;
+        ctx.beginPath(); ctx.ellipse(rx, ry, W*0.28, H*0.3, 0, 0, Math.PI*2); ctx.fill();
+
+        const bx = W * 0.2 + Math.sin(t * 0.00025 + 1) * 50;
+        const by = H * 0.75 + Math.cos(t * 0.00035 + 2) * 35;
+        const bg2 = ctx.createRadialGradient(bx, by, 0, bx, by, W * 0.25);
+        bg2.addColorStop(0, 'rgba(58,123,213,0.3)'); bg2.addColorStop(1, 'transparent');
+        ctx.fillStyle = bg2;
+        ctx.beginPath(); ctx.ellipse(bx, by, W*0.25, H*0.28, 0, 0, Math.PI*2); ctx.fill();
+
+        const cc = W * 0.5 + Math.sin(t * 0.0002 + 3) * 30;
+        const cy2 = H * 0.45 + Math.cos(t * 0.00028) * 25;
+        const cg = ctx.createRadialGradient(cc, cy2, 0, cc, cy2, W * 0.2);
+        cg.addColorStop(0, 'rgba(0,210,255,0.16)'); cg.addColorStop(1, 'transparent');
+        ctx.fillStyle = cg;
+        ctx.beginPath(); ctx.ellipse(cc, cy2, W*0.2, H*0.22, 0, 0, Math.PI*2); ctx.fill();
+
+        ctx.restore();
+      }
+
+      function drawBG() {
+        const W = canvas.width, H = canvas.height;
+        const g = ctx.createLinearGradient(0, 0, W, H);
+        g.addColorStop(0, '#0c0c28'); g.addColorStop(0.5, '#111130'); g.addColorStop(1, '#0c0c28');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      }
+
+      function drawScanlines() {
+        ctx.save(); ctx.globalAlpha = 0.025; ctx.fillStyle = '#000';
+        for (let y = 0; y < canvas.height; y += 3) ctx.fillRect(0, y, canvas.width, 1);
+        ctx.restore();
+      }
+
+      function initAll() { initNodes(); initCode(); }
+
+      let raf, lastEdgeRebuild = 0;
+      function loop(t) {
+        drawBG();
+        drawOrbs(t);
+        drawGrid(t);
+        tickNodes();
+        if (t - lastEdgeRebuild > 3000) { buildEdges(); lastEdgeRebuild = t; }
+        drawEdges();
+        tickPackets(); drawPackets();
+        drawNodes();
+        tickCode(); drawCode();
+        drawScanlines();
+        raf = requestAnimationFrame(loop);
+      }
+
+      initAll();
+      raf = requestAnimationFrame(loop);
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) cancelAnimationFrame(raf);
+        else raf = requestAnimationFrame(loop);
+      });
+    })();
+    </script>
+  </body>
+</html>

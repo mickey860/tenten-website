@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的公司</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: sans-serif;
+        background-color: #f5f5f5;
+      }
+      nav {
+        background-color: #fefefe;
+        padding: 16px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        color: #333;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .nav-links a {
+        color: #333;
+        text-decoration: none;
+        margin-left: 24px;
+      }
+
+      /* Hero区域 */
+      .hero {
+        height: 500px;
+        background-image: url('hero.jpg');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0,0,0,0.5);
+        background-blend-mode: darken;
+
+      }
+      .hero h1 {
+        color: white;
+        font-size: 52px;
+        margin-bottom: 16px;
+      }
+      .hero p {
+        color: #aaa;
+        font-size: 20px;
+        margin-bottom: 32px;
+      }
+      .btn {
+        background-color: #e94560;
+        color: white;
+        padding: 14px 32px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+            /* 卡片区域 */
+      .services {
+        padding: 80px 40px;
+        text-align: center;
+      }
+      .services h2 {
+        font-size: 36px;
+        margin-bottom: 48px;
+        color: #333;
+      }
+      .cards {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+      }
+      .card {
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 40px 40px;
+        width: 260px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        transition: transfrom 0.2s,box-shadow 0.2s;
+      }
+      .card:hover {
+        transfrom: translateY(-6px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+      .card .icon { font-size: 40px; margin-bottom: 16px; }
+      .card h3 { font-size: 20px; margin-bottom: 12px; color: #333; }
+      .card p { color: #888; line-height: 1.6; }
+
+      /* 页脚 */
+      footer {
+        background-color: #fefefe;
+        color: #333;
+        text-align: center;
+        padding: 20px;
+      }
+      footer .footer-links {
+        margin-bottom: 14px;
+      }
+      footer .footer-links a {
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+        margin: 0 14px;
+      }
+      footer .footer-links a:hover {
+        color: #aaa;
+      }
+      footer p {
+        font-size: 14px;
+      }
+      /* 手机端适配 */
+        @media (max-width: 768px) {
+
+      /* 导航栏变成上下排列 */
+        nav {
+        flex-direction: column;
+        gap: 16px;
+        padding: 20px;
+        text-align: center;
+        }
+
+      /* Hero标题缩小 */
+        .hero h1 {
+        font-size: 32px;
+        padding: 0 20px;
+        }
+        .hero p {
+        font-size: 16px;
+        padding: 0 20px;
+        }
+
+      /* 卡片变成竖排 */
+        .cards {
+        flex-direction: column;
+        align-items: center;
+        }
+        .card {
+        width: 80%;
+        }
+
+    }
+    </style>
+  </head>
+  <body>
+
+    <nav>
+      <div class="logo">我的公司</div>
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="about.html">关于我们</a>
+        <a href="contact.html">联系我们</a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <h1>我们创造未来</h1>
+      <p>专注于用技术解决真实问题</p>
+      <button class="btn">了解更多</button>
+    </div>
+
+    <div class="services">
+      <h2>我们的服务</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="icon">🚀</div>
+          <h3>产品开发</h3>
+          <p>从想法到落地，帮助你快速构建产品原型</p>
+        </div>
+        <div class="card">
+          <div class="icon">💡</div>
+          <h3>战略咨询</h3>
+          <p>深度分析市场，为你制定清晰的发展路径</p>
+        </div>
+        <div class="card">
+          <div class="icon">📈</div>
+          <h3>增长运营</h3>
+          <p>数据驱动，持续优化你的用户增长策略</p>
+        </div>
+      </div>
+    </div>
+    <footer>
+    <p>© 2026 我的公司 · 保留所有权利</p>
+      <div class="footer-links">
+        <a href="index.html">首页</a>
+        <a href="about.html">关于我们</a>
+        <a href="contact.html">联系我们</a>
+      </div>
+    </footer>
+  </body>
+</html>
